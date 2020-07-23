@@ -1,5 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/auth";
+import "firebase/database";
 //import "firebase/firestore";
 
 const firebaseConfig = {
@@ -78,3 +79,51 @@ export const signInWithEmailAndPassword = () => {
 };
 
 //export const firestore = firebase.firestore();
+
+// DATABASE - Realtime Database
+// var database = firebase.database();
+// const starCountRef = firebase.database().ref("user");
+
+// READ
+export const getAllUsers = () => {
+  console.log("getUser()");
+  firebase
+    .database()
+    .ref("/user")
+    .on("child_added", function (snapshot) {
+      console.log("//------------------------------------------");
+      console.log("snapshot.key = " + snapshot.key);
+      console.log("snapshot.val() = " + snapshot.val());
+      console.log("//------------------------------------------");
+    });
+};
+
+export const getCommentsByUserId = () => {
+  console.log("getCommentsByUserId()");
+  firebase
+    .database()
+    .ref("/comments")
+    .orderByChild("userId")
+    .equalTo(1)
+    .on("child_added", function (snapshot) {
+      console.log("//------------------------------------------");
+      console.log("snapshot.key = " + snapshot.key);
+      console.log("snapshot.val() = " + snapshot.val());
+      console.log("//------------------------------------------");
+    });
+};
+
+export const updateComments = () => {
+  console.log("getCommentsByUserId()");
+  firebase
+    .database()
+    .ref("/comments")
+    .orderByChild("userId")
+    .equalTo(1)
+    .on("child_added", function (snapshot) {
+      console.log("//------------------------------------------");
+      console.log("snapshot.key = " + snapshot.key);
+      console.log("snapshot.val() = " + snapshot.val());
+      console.log("//------------------------------------------");
+    });
+};
