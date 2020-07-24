@@ -3,8 +3,12 @@ import {
   signInWithEmailAndPassword,
   signInWithGoogle,
   createUserWithEmailAndPassword,
+  createComments,
+  createCommentsByUpdate,
   getAllUsers,
   getCommentsByUserId,
+  updateComments,
+  deleteComments,
 } from "./firebase.config";
 
 class App extends Component {
@@ -47,7 +51,21 @@ class App extends Component {
             function(snapshot))
           </p>
 
-          <button onClick={() => getAllUsers()} className="btn btn-secondary">
+          <button onClick={() => createComments()} className="btn btn-primary">
+            createComments
+          </button>
+
+          <button
+            onClick={() => createCommentsByUpdate()}
+            className="btn btn-primary ml-2"
+          >
+            createCommentsByUpdate
+          </button>
+
+          <button
+            onClick={() => getAllUsers()}
+            className="btn btn-warning ml-3"
+          >
             {" "}
             getAllUsers
           </button>
@@ -56,6 +74,20 @@ class App extends Component {
             className="btn btn-warning ml-3"
           >
             getCommentsByUserId
+          </button>
+
+          <button
+            onClick={() => updateComments()}
+            className="btn btn-success ml-3"
+          >
+            Update
+          </button>
+
+          <button
+            onClick={() => deleteComments()}
+            className="btn btn-danger ml-3"
+          >
+            Delete
           </button>
         </section>
       </>

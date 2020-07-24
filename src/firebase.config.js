@@ -25,12 +25,7 @@ export const signInWithGoogle = () => {
     // This gives you a Google Access Token.
     var token = result.credential.accessToken;
     console.log(token);
-    alert(
-      "token result.credential.accessToken= " +
-        token +
-        "\n user = " +
-        result.user
-    );
+    alert("token result.credential.accessToken= \n user = " + result.user);
     // The signed-in user info.
     var user = result.user;
     console.log("user " + user);
@@ -84,7 +79,55 @@ export const signInWithEmailAndPassword = () => {
 // var database = firebase.database();
 // const starCountRef = firebase.database().ref("user");
 
-// READ
+// 1. CREATE
+
+// a. set
+export const createComments = () => {
+  console.log("createComments()");
+
+  // Get a key for a new Post.
+  var newPostKey = firebase.database().ref().child("comments").push().key;
+  console.log(newPostKey);
+
+  const vo = {
+    body: "Updated bt Ravi",
+    title: "Data updated",
+    id: newPostKey,
+    userId: 1,
+  };
+
+  firebase
+    .database()
+    .ref("/comments/" + newPostKey)
+    .set(vo);
+};
+
+// b. update
+
+export const createCommentsByUpdate = () => {
+  console.log("createComments()");
+
+  // Get a key for a new Post.
+  var newPostKey = firebase.database().ref().child("comments").push().key;
+  console.log(newPostKey);
+
+  // Get a key for a new Post.
+  const vo = {
+    body:
+      "Write the new post's data simultaneously in the posts list and the user's post list.",
+    title: "createCommentsByUpdate title",
+    id: newPostKey,
+    userId: 1,
+  };
+
+  // Write the new post's data simultaneously in the posts list and the user's post list.
+  var updates = {};
+  updates["/comments/" + newPostKey] = vo;
+
+  firebase.database().ref().update(updates);
+};
+
+// 2. READ
 export const getAllUsers = () => {
   console.log("getUser()");
   firebase
@@ -113,17 +156,20 @@ export const getCommentsByUserId = () => {
     });
 };
 
+// 3. UDPATE
+
 export const updateComments = () => {
-  console.log("getCommentsByUserId()");
-  firebase
-    .database()
-    .ref("/comments")
-    .orderByChild("userId")
-    .equalTo(1)
-    .on("child_added", function (snapshot) {
-      console.log("//------------------------------------------");
-      console.log("snapshot.key = " + snapshot.key);
-      console.log("snapshot.val() = " + snapshot.val());
-      console.log("//------------------------------------------");
-    });
+  console.log("updateComments()");
+  firebase.database().ref("/comments/0").set({
+    body: "Updated bt Ravi",
+    title: "Data updated",
+    id: 0,
+    userId: 1,
+  });
+};
+
+// 4. DELETE
+export const deleteComments = () => {
+  console.log("deleteComments()");
+  firebase.database().ref("/comments/2").remove();
 };
