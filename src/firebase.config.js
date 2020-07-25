@@ -56,13 +56,13 @@ export const createUserWithEmailAndPassword = () => {
 // SIGN IN
 export const signInWithEmailAndPassword = () => {
   console.log("signInWithEmailAndPassword()");
-  let email = "ravwi@google.com2";
+  let email = "ravwi@google.com";
   let password = "paswsion1";
   firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
     .then(function (result) {
-      console.log("result = " + result);
+      alert("Welcome! You are now logged in.");
     })
     .catch(function (error) {
       // Handle Errors here.
@@ -172,4 +172,14 @@ export const updateComments = () => {
 export const deleteComments = () => {
   console.log("deleteComments()");
   firebase.database().ref("/comments/2").remove();
+};
+
+// Detecting Connection State (Online | Offline)
+
+export const isOnline = () => {
+  var connectedRef = firebase.database().ref(".info/connected");
+  connectedRef.on("value", function (snap) {
+    console.log("snap.value() = " + snap.val());
+    return snap.val();
+  });
 };

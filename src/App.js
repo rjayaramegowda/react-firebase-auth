@@ -9,14 +9,18 @@ import {
   getCommentsByUserId,
   updateComments,
   deleteComments,
+  isOnline,
 } from "./firebase.config";
 
 class App extends Component {
   render() {
     return (
       <>
-        <div className="container mt-5">
-          <h1 className="display-4">React Firebase</h1>
+        <div className="container mt-5 d-flex align-items-center">
+          <h1 className="display-4 mr-auto">React Firebase</h1>
+          <p className={isOnline() === true ? "text-success" : "text-danger"}>
+            You are offline
+          </p>
         </div>
         <hr />
         <div className="container mt-5">
@@ -64,7 +68,7 @@ class App extends Component {
 
           <button
             onClick={() => getAllUsers()}
-            className="btn btn-warning ml-3"
+            className="btn btn-warning   ml-3"
           >
             {" "}
             getAllUsers
