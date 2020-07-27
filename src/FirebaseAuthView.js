@@ -12,7 +12,7 @@ import {
   isOnline,
 } from "./firebase.config";
 
-class RealTimeDatabase extends Component {
+class FirebaseAuthView extends Component {
   render() {
     return (
       <>
@@ -99,4 +99,4 @@ class RealTimeDatabase extends Component {
   }
 }
 
-export default RealTimeDatabase;
+export default FirebaseAuthView;

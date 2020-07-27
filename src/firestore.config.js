@@ -1,6 +1,4 @@
 import firebase from "firebase/app";
-import admin from "firebase-admin";
-import "firebase/auth";
 import "firebase/database";
 import "firebase/firestore";
 
@@ -14,85 +12,64 @@ const firebaseConfig = {
   appId: "1:1074391200932:web:e79851a21fdb36eaf96231",
 };
 
-//console.log(db);
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
-//firebase.initializeApp(firebaseConfig);
-
-// DATABASE - Realtime Database
-// var database = firebase.database();
-// const starCountRef = firebase.database().ref("user");
+// DATABASE - Firestore Database
 
 // 1. CREATE
 
 // a. set
-export const createComments = () => {
-  console.log("createComments()");
-
-  // Get a key for a new Post.
-  var newPostKey = firebase.database().ref().child("comments").push().key;
-  console.log(newPostKey);
-
-  const vo = {
-    body: "Updated bt Ravi",
-    title: "Data updated",
-    id: newPostKey,
-    userId: 1,
-  };
-
-  firebase
-    .database()
-    .ref("/comments/" + newPostKey)
-    .set(vo);
-};
-
-// b. update
-
-export const createCommentsByUpdate = () => {
-  console.log("createComments()");
-
-  // Get a key for a new Post.
-  var newPostKey = firebase.database().ref().child("comments").push().key;
-  console.log(newPostKey);
-
-  // Get a key for a new Post.
-  const vo = {
-    body:
-      "Write the new post's data simultaneously in the posts list and the user's post list.",
-    title: "createCommentsByUpdate title",
-    id: newPostKey,
-    userId: 1,
-  };
-
-  // Write the new post's data simultaneously in the posts list and the user's post list.
-  var updates = {};
-  updates["/comments/" + newPostKey] = vo;
-
-  firebase.database().ref().update(updates);
-};
+export const createUser = () => {};
 
 // 2. READ
 export const getAllUsers = () => {
-  console.log("getUser()");
+  console.log("getAllUsers()" + db);
+
+  db.collection("cities")
+    .get()
+    .then(function (querySnapshot) {
+      querySnapshot.forEach(function (doc) {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+      });
+    })
+    .catch(function (error) {
+      console.log("Error getting documents: ", error);
+    });
 };
 
-export const getCommentsByUserId = () => {
-  console.log("getCommentsByUserId()");
+export const getOneUser = () => {
+  console.log("getOneUser()");
+
+  db.collection("/user")
+    .where("email", "==", "rjayaramegowda@gmail.com")
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach(function (doc) {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+      });
+    });
 };
 
 // 3. UDPATE
 
-export const updateComments = () => {
-  console.log("updateComments()");
-  firebase.database().ref("/comments/0").set({
-    body: "Updated bt Ravi",
-    title: "Data updated",
-    id: 0,
-    userId: 1,
-  });
+export const collectionGroupQueries = () => {
+  console.log("[firestore.config] collectionGroupQueries()");
+  var citiesRef = db.collection("cities");
+
+  Promise.all([
+    citiesRef.doc("SF").collection("landmarks").doc().set({
+      name: "Golden Gate Bridge",
+      type: "bridge",
+    }),
+    citiesRef.doc("SF").collection("landmarks").doc().set({
+      name: "Legion of Honor",
+      type: "museum",
+    }),
+  ]);
 };
 
 // 4. DELETE
-export const deleteComments = () => {
-  console.log("deleteComments()");
-  firebase.database().ref("/comments/2").remove();
-};
+export const deleteUser = () => {};

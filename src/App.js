@@ -1,9 +1,15 @@
 import React, { Component } from "react";
-import FirestoreView from "./FirestoreView";
+
+import FirebaseAuthView from "./FirebaseAuthView";
 
 class App extends Component {
   render() {
-    return <FirestoreView />;
+    return (
+      <>
+        <FirebaseAuthView />
+        {/* <FirestoreView /> */}
+      </>
+    );
   }
 }
 

@@ -1,41 +1,25 @@
 import React, { Component } from "react";
 import {
-  createComments,
-  createCommentsByUpdate,
+  createUser,
   getAllUsers,
-  getCommentsByUserId,
-  updateComments,
-  deleteComments,
+  getOneUser,
+  collectionGroupQueries,
+  deleteUser,
 } from "./firestore.config";
 
 class FirestoreView extends Component {
   render() {
     return (
       <div>
-        <div className="container mt-5 d-flex align-items-center">
-          <h1 className="display-4 mr-auto">React Firebase</h1>
-        </div>
-        <hr />
-
         <section className="container mt-5">
           <h2>Firestore</h2>
           <p className="lead">
-            firebase .database() .ref("/user") .on("child_added",
-            function(snapshot))
+            firebase.firestore.collection("/user").where("email", "==",
+            "rjayaramegowda@gmail.com").get()
           </p>
 
-          <button
-            onClick={() => createComments()}
-            className="btn btn-primary d-none"
-          >
-            createComments
-          </button>
-
-          <button
-            onClick={() => createCommentsByUpdate()}
-            className="btn btn-primary ml-2 d-none"
-          >
-            createCommentsByUpdate
+          <button onClick={() => createUser()} className="btn btn-primary">
+            createUser
           </button>
 
           <button
@@ -45,22 +29,20 @@ class FirestoreView extends Component {
             {" "}
             getAllUsers
           </button>
-          <button
-            onClick={() => getCommentsByUserId()}
-            className="btn btn-warning ml-3"
-          >
-            getCommentsByUserId
+
+          <button onClick={() => getOneUser()} className="btn btn-warning ml-3">
+            getOneUser
           </button>
 
           <button
-            onClick={() => updateComments()}
-            className="btn btn-success ml-3 d-none"
+            onClick={() => collectionGroupQueries()}
+            className="btn btn-success ml-3"
           >
-            Update
+            Collection group queries
           </button>
 
           <button
-            onClick={() => deleteComments()}
+            onClick={() => deleteUser()}
             className="btn btn-danger ml-3 d-none"
           >
             Delete
